@@ -1,22 +1,61 @@
+// ignore: avoid_web_libraries_in_flutter
+//import 'dart:js';
+
 import 'package:flutter/material.dart';
 
-void main() {
-  runApp(const ByteBank());
-}
+void main() => runApp(const ByteBankApp());
 
-class ByteBank extends StatelessWidget {
-  const ByteBank({Key? key}) : super(key: key);
+class ByteBankApp extends StatelessWidget {
+  const ByteBankApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     var builder = Builder(builder: (context) {
       return const MaterialApp(
         home: Scaffold(
-          body: FormTransferencia(),
+          body: ListaDeTranferencias(),
         ),
       );
     });
     return builder;
+  }
+}
+
+class ListaDeTranferencias extends StatelessWidget {
+  const ListaDeTranferencias({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    _transferencias.add(Transferencia(100.0, 1000));
+    _transferencias.add(Transferencia(100.0, 1000));
+    _transferencias.add(Transferencia(100.0, 1000));
+    _transferencias.add(Transferencia(100.0, 1000));
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Tranferências'),
+      ),
+      body: ListView.builder(
+        itemCount: _transferencias.length,
+        itemBuilder: (context, indice) {
+          final transferencia = _tranferencia[indice];
+          return ItemTransferencia(transferencia)
+        },
+      ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.add),
+        onPressed: () {
+          final Future<Transferencia?> future =
+              Navigator.push(context, MaterialPageRoute(builder: (context) {
+            return FormTransferencia();
+          }));
+          future.then((transferenciaRecebida) {
+            debugPrint('Chegou no future.then(...)');
+            debugPrint('$transferenciaRecebida');
+          });
+        },
+      ),
+    );
   }
 }
 
@@ -51,7 +90,7 @@ class FormTransferencia extends StatelessWidget {
             child: const Text('Confirmar'),
             onPressed: () {
               debugPrint('clicou no confirmar');
-              _criaTranferencia();
+              _criaTranferencia(context);
             },
           ),
         ],
@@ -59,12 +98,13 @@ class FormTransferencia extends StatelessWidget {
     );
   }
 
-  void _criaTranferencia() {
+  void _criaTranferencia(BuildContext context) {
     final int? numeroConta = int.tryParse(_controllerCampoNumeroConta.text);
     final double? valor = double.tryParse(_controllerValorConta.text);
     if (numeroConta != null && valor != null) {
       final transferenciaCriada = Transferencia(valor, numeroConta);
       debugPrint('$transferenciaCriada');
+      Navigator.pop(context, transferenciaCriada);
     }
   }
 }

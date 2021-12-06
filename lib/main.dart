@@ -21,26 +21,27 @@ class ByteBankApp extends StatelessWidget {
   }
 }
 
-class ListaDeTranferencias extends StatelessWidget {
-  const ListaDeTranferencias({Key? key}) : super(key: key);
+class ListaDeTranferencias extends StatefulWidget {
+  static final List<Transferencia> _transferencias = [];
 
+  const ListaDeTranferencias({Key? key}) : super(key: key);
+  @override
+  State<StatefulWidget> createState() => ListaDeTranferenciasState();
+}
+
+class ListaDeTranferenciasState extends State<ListaDeTranferencias> {
   @override
   Widget build(BuildContext context) {
-    _transferencias.add(Transferencia(100.0, 1000));
-    _transferencias.add(Transferencia(100.0, 1000));
-    _transferencias.add(Transferencia(100.0, 1000));
-    _transferencias.add(Transferencia(100.0, 1000));
     return Scaffold(
       appBar: AppBar(
         title: const Text('Tranferências'),
       ),
       body: ListView.builder(
-        itemCount: _transferencias.length,
+        itemCount: ListaDeTranferencias._transferencias.length,
         itemBuilder: (context, indice) {
-          final transferencia = _tranferencia[indice];
-          return ItemTransferencia(transferencia)
+          final transferencia = ListaDeTranferencias._transferencias[indice];
+          return ItemTransferencia(transferencia);
         },
-      ),
       ),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
@@ -52,6 +53,7 @@ class ListaDeTranferencias extends StatelessWidget {
           future.then((transferenciaRecebida) {
             debugPrint('Chegou no future.then(...)');
             debugPrint('$transferenciaRecebida');
+            ListaDeTranferencias._transferencias.add(transferenciaRecebida!);
           });
         },
       ),

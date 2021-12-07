@@ -11,10 +11,19 @@ class ByteBankApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var builder = Builder(builder: (context) {
-      return const MaterialApp(
-        home: Scaffold(
-          body: ListaDeTranferencias(),
+      return MaterialApp(
+        theme: ThemeData(
+          colorScheme: ColorScheme.fromSwatch(
+            primarySwatch: Colors.green,
+          ).copyWith(
+            secondary: Colors.blueAccent[700],
+          ),
+          buttonTheme: const ButtonThemeData(
+            buttonColor: Colors.green,
+            textTheme: ButtonTextTheme.primary,
+          ),
         ),
+        home: const ListaDeTranferencias(),
       );
     });
     return builder;
@@ -44,16 +53,19 @@ class ListaDeTranferenciasState extends State<ListaDeTranferencias> {
         },
       ),
       floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add),
+        child: const Icon(Icons.add),
         onPressed: () {
           final Future<Transferencia?> future =
               Navigator.push(context, MaterialPageRoute(builder: (context) {
             return FormTransferencia();
           }));
           future.then((transferenciaRecebida) {
+            Future.delayed(const Duration(seconds: 1));
             debugPrint('Chegou no future.then(...)');
             debugPrint('$transferenciaRecebida');
-            ListaDeTranferencias._transferencias.add(transferenciaRecebida!);
+            setState(() {
+              ListaDeTranferencias._transferencias.add(transferenciaRecebida!);
+            });
           });
         },
       ),
@@ -61,9 +73,14 @@ class ListaDeTranferenciasState extends State<ListaDeTranferencias> {
   }
 }
 
-class FormTransferencia extends StatelessWidget {
+class FormTransferencia extends StatefulWidget {
   const FormTransferencia({Key? key}) : super(key: key);
 
+  @override
+  FormTransferenciaState createState() => FormTransferenciaState();
+}
+
+class FormTransferenciaState extends State<FormTransferencia> {
   static final TextEditingController _controllerCampoNumeroConta =
       TextEditingController();
   static final TextEditingController _controllerValorConta =
@@ -75,27 +92,29 @@ class FormTransferencia extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Criando Transferências'),
       ),
-      body: Column(
-        children: <Widget>[
-          Editor(
-            controlador: _controllerCampoNumeroConta,
-            rotulo: 'Numero da Conta',
-            dica: '0000',
-          ),
-          Editor(
-            controlador: _controllerValorConta,
-            rotulo: 'Valor',
-            dica: '0.00',
-            icone: Icons.monetization_on,
-          ),
-          ElevatedButton(
-            child: const Text('Confirmar'),
-            onPressed: () {
-              debugPrint('clicou no confirmar');
-              _criaTranferencia(context);
-            },
-          ),
-        ],
+      body: SingleChildScrollView(
+        child: Column(
+          children: <Widget>[
+            Editor(
+              controlador: _controllerCampoNumeroConta,
+              rotulo: 'Numero da Conta',
+              dica: '0000',
+            ),
+            Editor(
+              controlador: _controllerValorConta,
+              rotulo: 'Valor',
+              dica: '0.00',
+              icone: Icons.monetization_on,
+            ),
+            ElevatedButton(
+              child: const Text('Confirmar'),
+              onPressed: () {
+                debugPrint('clicou no confirmar');
+                _criaTranferencia(context);
+              },
+            ),
+          ],
+        ),
       ),
     );
   }

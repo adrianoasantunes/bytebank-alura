@@ -62,11 +62,3 @@ class Dashboard extends StatelessWidget {
     );
   }
 }
-/*Material(color: Theme.of(context).primaryColor,
-              child: InkWell(
-                onTap: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) => const ContactList(),
-                    ),
-                  );*/

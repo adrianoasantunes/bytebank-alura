@@ -29,32 +29,3 @@ class ByteBankApp extends StatelessWidget {
     );
   }
 }
-
-
-
-/* Conteúdo Alura Curso -> Fundamentos Flutter
-
-class ByteBankApp extends StatelessWidget {
-  const ByteBankApp({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    var builder = Builder(builder: (context) {
-      return MaterialApp(
-        theme: ThemeData(
-          colorScheme: ColorScheme.fromSwatch(
-            primarySwatch: Colors.green,
-          ).copyWith(
-            secondary: Colors.blueAccent[700],
-          ),
-          buttonTheme: const ButtonThemeData(
-            buttonColor: Colors.green,
-            textTheme: ButtonTextTheme.primary,
-          ),
-        ),
-        home: const ListaDeTranferencias(),
-      );
-    });
-    return builder;
-  }
-}*/

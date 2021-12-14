@@ -3,12 +3,15 @@
 //import 'dart:html';
 //import 'dart:ui';
 //import 'package:bytebank/screens/transferencia/lista.dart';
+import 'package:bytebank/database/app_database.dart';
+import 'package:bytebank/models/contact.dart';
 import 'package:flutter/material.dart';
 import 'package:bytebank/screens/dashboard.dart';
-import 'package:bytebank/screens/contact_form.dart';
-import 'package:bytebank/screens/contact_list.dart';
 
-void main() => runApp(const ByteBankApp());
+void main() {
+  runApp(const ByteBankApp());
+  save(Contact(0, 'Adriano', 1234));
+}
 
 class ByteBankApp extends StatelessWidget {
   const ByteBankApp({Key? key}) : super(key: key);

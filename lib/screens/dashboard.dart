@@ -26,18 +26,20 @@ class Dashboard extends StatelessWidget {
               color: Theme.of(context).primaryColor,
               child: InkWell(
                 onTap: () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => const ContactList()));
+                  Navigator.of(context).push(
+                      MaterialPageRoute(builder: (context) => ContactList()));
                 },
                 child: Container(
                   height: 100,
-                  width: 150,
+                  width: 120,
                   color: Theme.of(context).primaryColor,
                   child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
                       Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: const <Widget>[
                           Icon(
                             Icons.people,

@@ -19,9 +19,8 @@ Future<Database> createDataBase() {
 Future<int> save(Contact contact) {
   return createDataBase().then(
     (db) {
-      final Map<String, dynamic> contactMap = Map();
+      final Map<String, dynamic> contactMap = {};
 
-      contactMap['id'] = contact.id;
       contactMap['account_name'] = contact.accountName;
       contactMap['account_number'] = contact.accountNumber;
 
@@ -30,17 +29,17 @@ Future<int> save(Contact contact) {
   );
 }
 
-void findAll() {
-  createDataBase().then(
+Future<List<Contact>> findAll() {
+  return createDataBase().then(
     (db) {
-      db.query('contacts').then(
+      return db.query('contacts').then(
         (maps) {
           final List<Contact> contacts = [];
           for (Map<String, dynamic> map in maps) {
             final Contact contact = Contact(
               map['id'],
-              map['accountName'],
-              map['accountNumber'],
+              map['account_name'],
+              map['account_number'],
             );
             contacts.add(contact);
           }

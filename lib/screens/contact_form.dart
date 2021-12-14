@@ -1,3 +1,4 @@
+import 'package:bytebank/database/app_database.dart';
 import 'package:bytebank/models/contact.dart';
 import 'package:flutter/material.dart';
 
@@ -12,7 +13,6 @@ class _ContactFormState extends State<ContactForm> {
       TextEditingController();
   static final TextEditingController _numberAcountController =
       TextEditingController();
-  static late final int id;
 
   @override
   Widget build(BuildContext context) {
@@ -48,8 +48,9 @@ class _ContactFormState extends State<ContactForm> {
                     final String name = _nameAccountController.text;
                     final int? number =
                         int.tryParse(_numberAcountController.text);
-                    final Contact newContact = Contact(id, name, number!);
-                    Navigator.pop(context, newContact);
+                    final Contact newContact = Contact(0, name, number!);
+                    debugPrint('New Contact ->>>' + newContact.toString());
+                    save(newContact).then((id) => Navigator.pop(context));
                   },
                 ),
               ),

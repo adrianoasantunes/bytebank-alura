@@ -1,10 +1,17 @@
-import 'package:bytebank/database/app_database.dart';
+import 'package:bytebank/database/dao/contact_dao.dart';
 import 'package:bytebank/models/contact.dart';
 import 'package:bytebank/screens/contact_form.dart';
 import 'package:flutter/material.dart';
 
-class ContactList extends StatelessWidget {
+class ContactList extends StatefulWidget {
   ContactList({Key? key}) : super(key: key);
+
+  @override
+  State<ContactList> createState() => _ContactListState();
+}
+
+class _ContactListState extends State<ContactList> {
+  final ContactDao _daoContact = ContactDao();
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +21,7 @@ class ContactList extends StatelessWidget {
       ),
       body: FutureBuilder<List<Contact>>(
         initialData: [],
-        future: findAll(),
+        future: _daoContact.findAll(),
         builder: (context, snapshot) {
           switch (snapshot.connectionState) {
             case ConnectionState.none:
@@ -56,7 +63,7 @@ class ContactList extends StatelessWidget {
                 ),
               )
               .then(
-                (newContact) => debugPrint(newContact.toString()),
+                (newContact) => setState(() {}),
               );
         },
         child: const Icon(Icons.add),
@@ -65,22 +72,38 @@ class ContactList extends StatelessWidget {
   }
 }
 
-class _ContactItem extends StatelessWidget {
+class _ContactItem extends StatefulWidget {
   final Contact contact;
   _ContactItem(this.contact);
 
+  @override
+  State<_ContactItem> createState() => _ContactItemState();
+}
+
+class _ContactItemState extends State<_ContactItem> {
   @override
   Widget build(BuildContext context) {
     return Card(
       child: ListTile(
         title: Text(
-          contact.accountName,
+          widget.contact.accountName,
           style: const TextStyle(fontSize: 24.0),
         ),
         subtitle: Text(
-          contact.accountNumber.toString(),
+          widget.contact.accountNumber.toString(),
           style: const TextStyle(fontSize: 24.0),
         ),
+        onTap: () {
+          Navigator.of(context)
+              .push(
+                MaterialPageRoute(
+                  builder: (context) => ContactForm(),
+                ),
+              )
+              .then(
+                (value) => setState(() {}),
+              );
+        },
       ),
     );
   }

@@ -1,4 +1,5 @@
 import 'package:bytebank/database/app_database.dart';
+import 'package:bytebank/database/dao/contact_dao.dart';
 import 'package:bytebank/models/contact.dart';
 import 'package:flutter/material.dart';
 
@@ -9,10 +10,9 @@ class ContactForm extends StatefulWidget {
 }
 
 class _ContactFormState extends State<ContactForm> {
-  static final TextEditingController _nameAccountController =
-      TextEditingController();
-  static final TextEditingController _numberAcountController =
-      TextEditingController();
+  final TextEditingController _nameAccountController = TextEditingController();
+  final TextEditingController _numberAcountController = TextEditingController();
+  final ContactDao _daoContact = ContactDao();
 
   @override
   Widget build(BuildContext context) {
@@ -49,8 +49,9 @@ class _ContactFormState extends State<ContactForm> {
                     final int? number =
                         int.tryParse(_numberAcountController.text);
                     final Contact newContact = Contact(0, name, number!);
-                    debugPrint('New Contact ->>>' + newContact.toString());
-                    save(newContact).then((id) => Navigator.pop(context));
+                    _daoContact
+                        .save(newContact)
+                        .then((id) => Navigator.pop(context));
                   },
                 ),
               ),

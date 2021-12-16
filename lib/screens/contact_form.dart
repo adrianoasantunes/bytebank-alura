@@ -1,41 +1,60 @@
-import 'package:bytebank/database/app_database.dart';
+import 'package:bytebank/components/editor.dart';
 import 'package:bytebank/database/dao/contact_dao.dart';
 import 'package:bytebank/models/contact.dart';
 import 'package:flutter/material.dart';
 
+//Editors Fields
+const _appBarTitulo = 'Contatos';
+const _rotuloName = 'Nome da conta';
+const _dicaName = 'Informe o nome da conta';
+const _rotuloNumber = 'Número da conta';
+const _tecladoNumerico = 's';
+const _dicaNumber = 'Informe o nº da conta';
+
 class ContactForm extends StatefulWidget {
-  const ContactForm({Key? key}) : super(key: key);
+  final int? id;
+  final String? accountName;
+  final int? accountNumber;
+
+  const ContactForm({
+    Key? key,
+    this.id,
+    this.accountName,
+    this.accountNumber,
+  }) : super(key: key);
+
   @override
-  State<ContactForm> createState() => _ContactFormState();
+  _ContactFormState createState() => _ContactFormState();
 }
 
 class _ContactFormState extends State<ContactForm> {
   final TextEditingController _nameAccountController = TextEditingController();
-  final TextEditingController _numberAcountController = TextEditingController();
+  final TextEditingController _numberAccountController =
+      TextEditingController();
   final ContactDao _daoContact = ContactDao();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Contatos'),
+        title: const Text(_appBarTitulo),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: <Widget>[
-            TextField(
+            Editor(
               controller: _nameAccountController,
-              decoration: InputDecoration(labelText: 'Nome Completo'),
-              style: TextStyle(fontSize: 24.0),
+              rotulo: _rotuloName,
+              dica: _dicaName,
             ),
             Padding(
               padding: const EdgeInsets.only(top: 8.0),
-              child: TextField(
-                controller: _numberAcountController,
-                decoration: InputDecoration(labelText: 'Número da Conta'),
-                style: TextStyle(fontSize: 24.0),
-                keyboardType: TextInputType.number,
+              child: Editor(
+                controller: _numberAccountController,
+                rotulo: _rotuloNumber,
+                dica: _dicaNumber,
+                inputNumerOpt: _tecladoNumerico,
               ),
             ),
             Padding(
@@ -45,13 +64,7 @@ class _ContactFormState extends State<ContactForm> {
                 child: ElevatedButton(
                   child: const Text('Registrar'),
                   onPressed: () {
-                    final String name = _nameAccountController.text;
-                    final int? number =
-                        int.tryParse(_numberAcountController.text);
-                    final Contact newContact = Contact(0, name, number!);
-                    _daoContact
-                        .save(newContact)
-                        .then((id) => Navigator.pop(context));
+                    _registerAccount(context);
                   },
                 ),
               ),
@@ -60,5 +73,12 @@ class _ContactFormState extends State<ContactForm> {
         ),
       ),
     );
+  }
+
+  void _registerAccount(BuildContext context) {
+    final String name = _nameAccountController.text;
+    final int? number = int.tryParse(_numberAccountController.text);
+    final Contact newContact = Contact(0, name, number!);
+    _daoContact.save(newContact).then((id) => Navigator.pop(context));
   }
 }

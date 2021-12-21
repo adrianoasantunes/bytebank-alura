@@ -4,7 +4,7 @@ import 'package:bytebank/models/contact.dart';
 import 'package:flutter/material.dart';
 
 //Editors Fields
-const _appBarTitulo = 'Contatos';
+const _appBarTitulo = 'Transferencias';
 const _rotuloName = 'Nome da conta';
 const _dicaName = 'Informe o nome da conta';
 const _rotuloNumber = 'Número da conta';
@@ -12,7 +12,6 @@ const _tecladoNumerico = 's';
 const _dicaNumber = 'Informe o nº da conta';
 
 class ContactForm extends StatefulWidget {
-
   @override
   _ContactFormState createState() => _ContactFormState();
 }

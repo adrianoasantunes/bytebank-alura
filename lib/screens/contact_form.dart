@@ -12,16 +12,6 @@ const _tecladoNumerico = 's';
 const _dicaNumber = 'Informe o nº da conta';
 
 class ContactForm extends StatefulWidget {
-  final int? id;
-  final String? accountName;
-  final int? accountNumber;
-
-  const ContactForm({
-    Key? key,
-    this.id,
-    this.accountName,
-    this.accountNumber,
-  }) : super(key: key);
 
   @override
   _ContactFormState createState() => _ContactFormState();

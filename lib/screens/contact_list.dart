@@ -93,21 +93,6 @@ class _ContactItemState extends State<_ContactItem> {
           widget.contact.accountNumber.toString(),
           style: const TextStyle(fontSize: 24.0),
         ),
-        onTap: () {
-          Navigator.of(context).push(
-            MaterialPageRoute(
-              builder: (context) => ContactForm(
-                id: widget.contact.id,
-                accountName: widget.contact.accountName,
-                accountNumber: widget.contact.accountNumber,
-              ),
-            ),
-          );
-          debugPrint('{ Sending... -> ' + widget.contact.id.toString());
-          debugPrint('{ Sending... -> ' + widget.contact.accountName);
-          debugPrint(
-              '{ Sending... -> ' + widget.contact.accountNumber.toString());
-        },
       ),
     );
   }

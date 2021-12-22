@@ -1,6 +1,7 @@
-import 'package:flutter/material.dart';
-
 import 'package:bytebank/screens/contact_list.dart';
+import 'package:bytebank/screens/transaction_list.dart';
+
+import 'package:flutter/material.dart';
 
 class Dashboard extends StatelessWidget {
   const Dashboard({Key? key}) : super(key: key);
@@ -9,6 +10,7 @@ class Dashboard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.green,
         title: const Text('Dashboard'),
       ),
       body: Column(
@@ -20,23 +22,56 @@ class Dashboard extends StatelessWidget {
             padding: const EdgeInsets.all(8.0),
             child: Image.asset('images/bytebank_logo.png'),
           ),
-          Row(
-            children: <Widget>[
-              _FeatureItem('Tranfer', Icons.monetization_on),
-              _FeatureItem('Transaction \n Feed', Icons.description),
-            ],
+          Container(
+            height: 120,
+            child: ListView(
+              scrollDirection: Axis.horizontal,
+              children: <Widget>[
+                _FeatureItem(
+                  'Tranfer',
+                  Icons.monetization_on,
+                  onTapRoute: () => _showListTransfer(context),
+                ),
+                _FeatureItem(
+                  'Transaction \n Feed',
+                  Icons.description,
+                  onTapRoute: () => _showListTransactions(context),
+                ),
+              ],
+            ),
           ),
         ],
+      ),
+    );
+  }
+
+  void _showListTransfer(BuildContext context) {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => ContactList(),
+      ),
+    );
+  }
+
+  void _showListTransactions(BuildContext context) {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => TransactionsList(),
       ),
     );
   }
 }
 
 class _FeatureItem extends StatelessWidget {
-  String name;
-  IconData icon;
+  final String name;
+  final IconData icon;
+  final Function? onTapRoute;
 
-  _FeatureItem(this.name, this.icon);
+  _FeatureItem(
+    this.name,
+    this.icon, {
+    @required this.onTapRoute,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -45,12 +80,8 @@ class _FeatureItem extends StatelessWidget {
       child: Material(
         color: Theme.of(context).primaryColor,
         child: InkWell(
-          onTap: () {
-            Navigator.of(context)
-                .push(MaterialPageRoute(builder: (context) => ContactList()));
-          },
+          onTap: () => onTapRoute!(),
           child: Container(
-            height: 100,
             width: 160,
             color: Theme.of(context).primaryColor,
             child: Column(
@@ -64,9 +95,9 @@ class _FeatureItem extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
+                      children: <Widget>[
                         Padding(
-                          padding: EdgeInsets.all(8.0),
+                          padding: const EdgeInsets.all(8.0),
                           child: Icon(
                             icon,
                             color: Colors.white,
@@ -74,7 +105,7 @@ class _FeatureItem extends StatelessWidget {
                           ),
                         ),
                         Padding(
-                          padding: EdgeInsets.all(8.0),
+                          padding: const EdgeInsets.all(8.0),
                           child: Text(
                             name.toString(),
                             textAlign: TextAlign.justify,

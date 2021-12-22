@@ -18,6 +18,7 @@ class _ContactListState extends State<ContactList> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Contacts'),
+        backgroundColor: Colors.green,
       ),
       body: FutureBuilder<List<Contact>>(
         initialData: [],

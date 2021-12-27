@@ -22,7 +22,7 @@ class Dashboard extends StatelessWidget {
             padding: const EdgeInsets.all(8.0),
             child: Image.asset('images/bytebank_logo.png'),
           ),
-          Container(
+          SizedBox(
             height: 120,
             child: ListView(
               scrollDirection: Axis.horizontal,
@@ -67,6 +67,7 @@ class _FeatureItem extends StatelessWidget {
   final IconData icon;
   final Function? onTapRoute;
 
+  // ignore: prefer_const_constructors_in_immutables
   _FeatureItem(
     this.name,
     this.icon, {

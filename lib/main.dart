@@ -3,11 +3,14 @@
 //import 'dart:html';
 //import 'dart:ui';
 //import 'package:bytebank/screens/transferencia/lista.dart';
+import 'package:bytebank/http/webclient.dart';
 import 'package:flutter/material.dart';
 import 'package:bytebank/screens/dashboard.dart';
 
 void main() {
   runApp(const ByteBankApp());
+  findAll()
+      .then((transactions) => print('New transactions -> $transactions ***'));
 }
 
 class ByteBankApp extends StatelessWidget {
@@ -25,7 +28,7 @@ class ByteBankApp extends StatelessWidget {
           textTheme: ButtonTextTheme.primary,
         ),
       ),
-      home: Dashboard(),
+      home: const Dashboard(),
     );
   }
 }

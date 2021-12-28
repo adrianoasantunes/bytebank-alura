@@ -1,16 +1,13 @@
-// ignore: avoid_web_libraries_in_flutter
-//import 'dart:js';
-//import 'dart:html';
-//import 'dart:ui';
-//import 'package:bytebank/screens/transferencia/lista.dart';
 import 'package:bytebank/http/webclient.dart';
 import 'package:flutter/material.dart';
 import 'package:bytebank/screens/dashboard.dart';
+import 'package:bytebank/models/transaction.dart';
+import 'package:bytebank/models/contact.dart';
 
 void main() {
   runApp(const ByteBankApp());
-  findAll()
-      .then((transactions) => print('New transactions -> $transactions ***'));
+  save(Transaction(200.0, Contact(0, 'Dri', 2000)))
+      .then((transaction) => print(transaction));
 }
 
 class ByteBankApp extends StatelessWidget {

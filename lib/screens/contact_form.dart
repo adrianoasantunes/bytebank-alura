@@ -1,15 +1,6 @@
-import 'package:bytebank/components/editor.dart';
 import 'package:bytebank/database/dao/contact_dao.dart';
 import 'package:bytebank/models/contact.dart';
 import 'package:flutter/material.dart';
-
-//Editors Fields
-const _appBarTitulo = 'Transferencias';
-const _rotuloName = 'Nome da conta';
-const _dicaName = 'Informe o nome da conta';
-const _rotuloNumber = 'Número da conta';
-const _tecladoNumerico = 's';
-const _dicaNumber = 'Informe o nº da conta';
 
 class ContactForm extends StatefulWidget {
   @override
@@ -17,34 +8,41 @@ class ContactForm extends StatefulWidget {
 }
 
 class _ContactFormState extends State<ContactForm> {
-  final TextEditingController _nameAccountController = TextEditingController();
-  final TextEditingController _numberAccountController =
+  final TextEditingController _accountNameController = TextEditingController();
+  final TextEditingController _accountNumberController =
       TextEditingController();
-  final ContactDao _daoContact = ContactDao();
+  final ContactDao _dao = ContactDao();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(_appBarTitulo),
-        backgroundColor: Colors.green,
+        title: Text('New contact'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: <Widget>[
-            Editor(
-              controller: _nameAccountController,
-              rotulo: _rotuloName,
-              dica: _dicaName,
+            TextField(
+              controller: _accountNameController,
+              decoration: InputDecoration(
+                labelText: 'Nome conta',
+              ),
+              style: TextStyle(
+                fontSize: 24.0,
+              ),
             ),
             Padding(
               padding: const EdgeInsets.only(top: 8.0),
-              child: Editor(
-                controller: _numberAccountController,
-                rotulo: _rotuloNumber,
-                dica: _dicaNumber,
-                inputNumerOpt: _tecladoNumerico,
+              child: TextField(
+                controller: _accountNumberController,
+                decoration: InputDecoration(
+                  labelText: 'Numero conta',
+                ),
+                style: TextStyle(
+                  fontSize: 24.0,
+                ),
+                keyboardType: TextInputType.number,
               ),
             ),
             Padding(
@@ -52,13 +50,18 @@ class _ContactFormState extends State<ContactForm> {
               child: SizedBox(
                 width: double.maxFinite,
                 child: ElevatedButton(
-                  child: const Text('Registrar'),
+                  child: Text('Registrar'),
                   onPressed: () {
-                    _registerAccount(context);
+                    final String accountName = _accountNameController.text;
+                    final int? accountNumber =
+                        int.tryParse(_accountNumberController.text);
+                    final Contact newContact =
+                        Contact(0, accountName, accountNumber!);
+                    _dao.save(newContact).then((id) => Navigator.pop(context));
                   },
                 ),
               ),
-            ),
+            )
           ],
         ),
       ),
@@ -66,9 +69,9 @@ class _ContactFormState extends State<ContactForm> {
   }
 
   void _registerAccount(BuildContext context) {
-    final String name = _nameAccountController.text;
-    final int? number = int.tryParse(_numberAccountController.text);
-    final Contact newContact = Contact(0, name, number!);
-    _daoContact.save(newContact).then((id) => Navigator.pop(context));
+    final String accountName = _accountNameController.text;
+    final int? accountNumber = int.tryParse(_accountNumberController.text);
+    final Contact newContact = Contact(0, accountName, accountNumber!);
+    _dao.save(newContact).then((id) => Navigator.pop(context));
   }
 }

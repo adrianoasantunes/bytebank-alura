@@ -1,5 +1,7 @@
 # bytebank
 
+A flutter learn project with alura course.
+
 A new Flutter project.
 
 ## Getting Started

@@ -4,6 +4,8 @@ A flutter learn project with alura course.
 
 A new Flutter project.
 
+Com esse projeto, abordo conhecimentos sobre: Comunicação HTTP: Flutter com web API
+
 ## Getting Started
 
 This project is a starting point for a Flutter application.

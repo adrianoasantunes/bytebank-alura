@@ -1,10 +1,13 @@
+<img src="https://cursos.alura.com.br/assets/images/logos/logo-alura.svg" alt="course logo" style="hegth:40px; width:40px;"/>
 # bytebank
 
 A flutter learn project with alura course.
 
 A new Flutter project.
 
-Com esse projeto, abordo conhecimentos sobre: Comunicação HTTP: Flutter com web API
+Com esse projeto, abordo conhecimentos sobre: Comunicação HTTP: Flutter com web API.
+<img src="https://www.alura.com.br/assets/api/cursos/flutter-comunicacao-http.svg" alt="course logo" style="hegth:40px; width:40px;"/>
+</br>
 
 ## Getting Started
 
